@@ -31,12 +31,7 @@ class NewtworkController{
 		let dataTask = URLSession.shared.dataTask(with: request){ (data, response, error) in
 			completion?(data, error)
 		}
-		
 		dataTask.resume()
-		
-		
-		
-		
 	}
 	
 	static func url(byAdding parameters: [String: String]?, to URL: URL) -> URL{
@@ -45,12 +40,9 @@ class NewtworkController{
 		components?.queryItems = parameters?.compactMap({ (parameters) -> URLQueryItem? in
 			return URLQueryItem(name: parameters.key, value: parameters.value)
 		})
-		
 		guard (components?.url) != nil else{
 			fatalError("URL components url is nil")
 		}
-		
 		return URL
-		
 	}
 }

@@ -20,18 +20,13 @@ class ViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		cardsRemainingLabel.text = "Cards remaining:\(cardsRemaining)"
-		
 		url = URL(string: "https://deckofcardsapi.com/api/deck/new/draw/?count=1")
-		
 		NewtworkController.performRequest(for: url!, httpMethod: .Get)
 		{(data, error) in
 			self.fillViewWith(data, error: error);
 		}
-		
-		
 	}
 
-	
 	@IBAction func colorButtonPressed(_ sender: UIButton) {
 		if sender.tag == 1{
 			print("Red pressed")
@@ -40,7 +35,7 @@ class ViewController: UIViewController {
 			print("Black pressed")
 		}
 		if cardsRemaining > 1{
-			cardsRemaining = cardsRemaining-1
+			cardsRemaining = cardsRemaining - 1
 			cardsRemainingLabel.text = "Cards remaining:\(cardsRemaining)"
 		}
 		else{
@@ -57,7 +52,6 @@ class ViewController: UIViewController {
 		let alertController = UIAlertController(title: titleMsg,
 												message: msg,
 												preferredStyle: .alert)
-		
 		let closeButton = UIAlertAction(title: "Close", style: .destructive) { (_) in
 			alertController.dismiss(animated: true)
 		}
@@ -65,25 +59,21 @@ class ViewController: UIViewController {
 		self.present(alertController, animated: true)
 	}
 	
-	
 	func fillViewWith(_ data: Data?, error: Error?){
 		if let error = error{
 			print ("Error getting from URL \(self.url!.absoluteString), error: \(error.localizedDescription)")
 		}
-		
 		if let data = data{
 			do{
 				let myCard = try JSONDecoder().decode(AllCards.self, from: data)
 				self.data = myCard.cards
 
 				print(self.data)
-				
 				print(myCard.cards[0].image)
+                
 				ImageController.getImage(for: myCard.cards[0].image ) { (image) in
 					self.cardImage.image = image
 				}
-				
-				
 			}
 			catch{
 				print ("Failed to decode pokemon from data.  error: \(error). Data: \(data)")
@@ -93,12 +83,6 @@ class ViewController: UIViewController {
 			print("Data ir nil!")
 		}
 	}
-
-	
-
-
-
-
 
 }
 
